@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  /* Forest green, after Jharkhand's sal forests */
+  --color-brand-50: #edf7f0;
+  --color-brand-100: #d3ecdb;
+  --color-brand-600: #1f7a43;
+  --color-brand-700: #17633a;
+  --color-brand-800: #124d2e;
+  --color-brand-900: #0b3320;
+  /* Sohrai wall-art earth tones */
+  --color-ochre-600: #b4532a;
+  --color-ochre-700: #8f3d1c;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --font-sans: "Noto Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-ticker {
+  animation: ticker 40s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker { animation: none; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-fade-up { animation: fade-up 0.35s ease-out both; }
+.animate-pop { animation: pop 0.2s ease-out both; transform-origin: bottom right; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-pop { animation: none; }
+}
