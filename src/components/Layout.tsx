@@ -153,9 +153,6 @@ function SchoolFooter() {
             </li>
           ))}
         </ul>
-        <Link to="/" className="mt-4 inline-block text-sm text-accent-400 hover:underline">
-          All CM SoE schools →
-        </Link>
       </div>
     </Footer>
   );
