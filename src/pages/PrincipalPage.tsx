@@ -1,9 +1,12 @@
-import { InfoGrid, PageBody, PageHeader, Section } from "../components/ui";
-import { principalMessage, school } from "../data/schoolData";
+import { SchoolPageHeader } from "../components/SchoolPageHeader";
+import { ComingSoonNote, InfoGrid, PageBody, Section } from "../components/ui";
+import { displayPhone, principalLabel } from "../data/schools";
+import { useSchool } from "../schoolContext";
 
-function initials(name: string) {
+function initials(name: string | null) {
+  if (!name) return "HM";
   return name
-    .replace(/^(Dr|Mr|Mrs|Ms|Shri|Smt)\.?\s+/, "")
+    .replace(/^(Dr|Md)\.?\s+/i, "")
     .split(" ")
     .map((p) => p[0])
     .join("")
@@ -11,19 +14,19 @@ function initials(name: string) {
 }
 
 export function PrincipalPage() {
-  const phoneHref = `tel:+91${school.phone.replace(/\D/g, "")}`;
+  const school = useSchool();
   return (
     <>
-      <PageHeader title="Principal" subtitle={`Head of ${school.shortName}`} />
+      <SchoolPageHeader title="Principal" subtitle={school.name} />
       <PageBody>
         <div className="grid gap-8 lg:grid-cols-3">
           <Section title="Principal's Details">
             <div className="flex flex-col items-center text-center">
               <div className="flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-600 text-4xl font-bold text-white ring-4 ring-accent-400">
-                {initials(school.principalName)}
+                {initials(school.hmName)}
               </div>
-              <h2 className="mt-4 text-xl font-bold text-brand-800">{school.principalName}</h2>
-              <p className="text-sm font-medium text-accent-600">Principal</p>
+              <h2 className="mt-4 text-xl font-bold text-brand-800">{principalLabel(school)}</h2>
+              <p className="text-sm font-medium text-accent-600">Principal / Headmaster</p>
               <p className="mt-1 text-sm text-slate-500">{school.name}</p>
             </div>
             <div className="mt-5">
@@ -33,26 +36,18 @@ export function PrincipalPage() {
                   {
                     label: "Contact number",
                     value: (
-                      <a href={phoneHref} className="font-medium text-brand-600 hover:underline">
-                        {school.phone}
+                      <a href={`tel:+91${school.hmPhone}`} className="font-medium text-brand-600 hover:underline">
+                        {displayPhone(school.hmPhone)}
                       </a>
                     ),
                   },
-                  { label: "Office timings", value: school.officeTimings },
                 ]}
               />
             </div>
           </Section>
-
           <div className="lg:col-span-2">
             <Section title="Message from the Principal">
-              <div className="space-y-3 text-slate-700">
-                {principalMessage.message.map((p) => (
-                  <p key={p}>{p}</p>
-                ))}
-              </div>
-              <p className="mt-6 font-semibold text-brand-800">{school.principalName}</p>
-              <p className="text-sm text-slate-500">Principal, {school.shortName}</p>
+              <ComingSoonNote text="A message from the Principal will be added here." />
             </Section>
           </div>
         </div>

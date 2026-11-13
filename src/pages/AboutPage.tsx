@@ -1,54 +1,34 @@
-import { BulletList, InfoGrid, PageBody, PageHeader, Section } from "../components/ui";
-import { school } from "../data/schoolData";
+import { SchoolPageHeader } from "../components/SchoolPageHeader";
+import { InfoGrid, PageBody, Section } from "../components/ui";
+import { ABOUT_CM_SOE, AFFILIATION, DEPARTMENT } from "../data/common";
+import { classesLabel, principalLabel, schoolAddress, schoolLevel } from "../data/schools";
+import { useSchool } from "../schoolContext";
 
 export function AboutPage() {
+  const school = useSchool();
   return (
     <>
-      <PageHeader title="About School" subtitle="Basic facts about the school" />
+      <SchoolPageHeader title="About School" subtitle="Basic facts about the school" />
       <PageBody>
         <Section title="School Details">
           <InfoGrid
             items={[
               { label: "School name", value: school.name },
-              { label: "UDISE code", value: school.udiseCode },
-              { label: "Address", value: school.address },
+              { label: "U-DISE code", value: school.udise },
+              { label: "Address", value: schoolAddress(school) },
               { label: "Block / District", value: `${school.block} / ${school.district}` },
-              { label: "State", value: school.state },
-              { label: "Year of establishment", value: school.established },
-              { label: "School category", value: school.category },
-              { label: "School type", value: school.type },
-              { label: "Education board", value: school.board },
-              { label: "Classes available", value: school.classes },
-              { label: "Medium of instruction", value: school.medium.join(", ") },
-              { label: "Shift", value: school.shift },
-              { label: "Principal", value: school.principalName },
-              { label: "Managed by", value: `${school.department}, ${school.affiliation}` },
+              { label: "State", value: "Jharkhand" },
+              ...(school.established ? [{ label: "Year of establishment", value: school.established }] : []),
+              { label: "School category", value: "CM School of Excellence" },
+              { label: "School level", value: schoolLevel(school) },
+              { label: "Classes available", value: classesLabel(school) },
+              { label: "Principal / HM", value: principalLabel(school) },
+              { label: "Managed by", value: `${DEPARTMENT}, ${AFFILIATION}` },
             ]}
           />
         </Section>
-
-        <Section title="School Timings">
-          <InfoGrid items={school.timings.map((t) => ({ label: t.label, value: t.value }))} />
-        </Section>
-
-        <div className="grid gap-8 md:grid-cols-2">
-          <Section title="Vision">
-            <p className="text-slate-700">{school.vision}</p>
-          </Section>
-          <Section title="Objectives">
-            <BulletList items={school.objectives} />
-          </Section>
-        </div>
-
-        <Section title="History of the School">
-          <ol className="relative space-y-5 border-l-2 border-brand-100 pl-6">
-            {school.history.map((h) => (
-              <li key={h} className="relative text-slate-700">
-                <span className="absolute top-1.5 -left-[31px] h-3 w-3 rounded-full bg-accent-500 ring-4 ring-white" />
-                {h}
-              </li>
-            ))}
-          </ol>
+        <Section title="About CM Schools of Excellence">
+          <p className="text-slate-700">{ABOUT_CM_SOE}</p>
         </Section>
       </PageBody>
     </>

@@ -1,33 +1,36 @@
-# School Website (demo)
+# CM Schools of Excellence – school websites
 
-Website for a Jharkhand government +2 school (CBSE, CM School of Excellence), built with React, TypeScript, Vite, Tailwind CSS and React Router.
-Right now all content is hard-coded demo data. Firebase will be added later.
+One React + TypeScript + Vite site that gives each of the 100 CM SoE schools in Jharkhand its own website.
+
+- Directory of all schools: `/`
+- A school's site: `/<U-DISE code>` (e.g. `/20011900801`), with pages like `/20011900801/contact`
+
+Live: https://gyan0149.github.io/school-website/
 
 ## Run
 
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm run build    # type-check + production build to dist/
+npm run build    # type-check + production build
 ```
 
 ## Where things live
 
 | Path | What it is |
 |------|------------|
-| `src/data/schoolData.ts` | **All website content** (school profile, notices, staff, results, gallery, downloads…). Edit this to change the site. |
-| `src/types/school.ts` | Types for that data. Shaped like the future Firestore collections. |
-| `src/navigation.ts` | Menu items (used by the header and footer). |
-| `src/pages/` | One file per page (Home, About, School Information, Academics, Admissions, Faculty, Notices, Results, Infrastructure, Gallery, Downloads, Contact). |
-| `src/components/` | Layout (header, nav, notice ticker, footer) and shared UI pieces. |
-| `public/docs/` | PDFs. Every download currently points to `sample-document.pdf`. |
+| `src/data/schools.ts` | The 100 schools (name, district, block, U-DISE, classes, HM name, HM mobile) plus optional extras per school (`EXTRAS`: established year, teachers, PIN code, map coordinates, landmarks). |
+| `src/data/common.ts` | Information shared by all schools (government links, schemes, admission guidelines, subjects). |
+| `src/pages/` | Directory page and per-school pages. Sections without real data show "Coming soon". |
+| `src/schoolContext.ts` | Gives every page the current school. |
 
-Photos: gallery items take an optional `imageUrl`. Without it a coloured placeholder is shown.
+To add landmarks or an exact map pin for a school, add an entry for its U-DISE code in `EXTRAS` in `src/data/schools.ts`.
 
-## Firebase plan (later)
+## Deploy
 
-- Hosting: Firebase Hosting (SPA rewrite to `index.html`).
-- Data: Firestore collections matching `src/types/school.ts` (`notices`, `gallery`, `downloads`, …).
-- Files: Firebase Storage for notice PDFs and gallery photos.
-- Admin: Firebase Auth + an admin panel for the school to post notices.
-- Coming soon (shown on the home page): AI help assistant and WhatsApp updates for parents.
+Every push to `main` deploys to GitHub Pages via `.github/workflows/deploy.yml`.
+
+## Later (Firebase)
+
+- Data in Firestore instead of `schools.ts`; files in Firebase Storage; admin login for schools to post notices.
+- Coming soon: AI help assistant and WhatsApp updates for parents.

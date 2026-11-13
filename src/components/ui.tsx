@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+export function PageHeader({ title, subtitle, homeTo = "/" }: { title: string; subtitle?: string; homeTo?: string }) {
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-brand-800 to-brand-600 text-white">
       <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:20px_20px]" />
       <div className="relative mx-auto max-w-7xl px-4 py-8">
         <nav aria-label="Breadcrumb" className="mb-2 text-sm text-brand-100">
-          <Link to="/" className="hover:underline">
+          <Link to={homeTo} className="hover:underline">
             Home
           </Link>
           <span className="mx-2">›</span>
@@ -179,6 +179,15 @@ export function PhotoPlaceholder({
         </div>
         <div className="mt-2 text-sm font-medium">{label}</div>
       </div>
+    </div>
+  );
+}
+
+export function ComingSoonNote({ text }: { text: string }) {
+  return (
+    <div className="flex items-start gap-3 rounded-md border border-dashed border-accent-500 bg-amber-50/60 p-4">
+      <span className="rounded-full bg-accent-500 px-2 py-0.5 text-xs font-bold whitespace-nowrap text-brand-900 uppercase">Coming soon</span>
+      <p className="text-sm text-slate-700">{text}</p>
     </div>
   );
 }
