@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { AFFILIATION, DEPARTMENT, govLinks } from "../data/common";
-import { displayPhone, getSchool, mapLink, schoolAddress } from "../data/schools";
+import { displayPhone, getSchool, imageUrl, mapLink, schoolAddress } from "../data/schools";
 import { navItems } from "../navigation";
 import { SchoolContext, useSchool, useSchoolPath } from "../schoolContext";
 import { Logo } from "./Logo";
@@ -55,11 +55,26 @@ function Header() {
             {schoolAddress(school)} · U-DISE: {school.udise}
           </p>
         </div>
-        <div className="ml-auto hidden text-right md:block">
-          <p className="text-2xl font-bold text-ochre-700">जोहार</p>
-          <p className="text-xs text-slate-500">
-            {school.district}, Jharkhand
-          </p>
+        <div className="ml-auto flex shrink-0 items-center gap-3">
+          <div className="hidden text-right md:block">
+            <p className="text-2xl font-bold text-ochre-700">जोहार झारखंड</p>
+            <p className="text-xs text-slate-500">
+              {school.district}, Jharkhand
+            </p>
+          </div>
+          <figure className="flex flex-col items-center">
+            <img
+              src={imageUrl("hemant-soren.jpg")}
+              alt="Shri Hemant Soren, Hon'ble Chief Minister, Jharkhand"
+              title="Shri Hemant Soren, Hon'ble Chief Minister, Jharkhand"
+              width={72}
+              height={72}
+              className="h-12 w-12 rounded-full object-cover ring-2 ring-accent-500 md:h-[72px] md:w-[72px]"
+            />
+            <figcaption className="mt-1 hidden text-center text-[10px] leading-tight text-slate-500 md:block">
+              Hon'ble CM
+            </figcaption>
+          </figure>
         </div>
       </div>
       <SohraiBorder />

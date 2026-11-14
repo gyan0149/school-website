@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { LocationSection } from "../components/LocationSection";
+import { PhotoSlideshow } from "../components/PhotoSlideshow";
 import { PrincipalAvatar } from "../components/PrincipalAvatar";
 import { SchoolGatePicture } from "../components/SchoolGatePicture";
 import { BulletList, ComingSoonNote, InfoGrid, Section } from "../components/ui";
@@ -16,6 +17,7 @@ import {
   schoolLevel,
 } from "../data/schools";
 import { useSchool, useSchoolPath } from "../schoolContext";
+import type { SchoolPhoto } from "../types/school";
 
 // Rolling hills and sal trees along the bottom of the banner.
 function Hills() {
@@ -29,6 +31,12 @@ function Hills() {
       <path d="M0 10 Q20 6 40 9 T80 8 T100 9 V12 H0Z" fill="#f8fafc" />
     </svg>
   );
+}
+
+// Puts the banner photo (e.g. the gate) first in the slideshow.
+function bannerFirst(photos: SchoolPhoto[], banner?: string): SchoolPhoto[] {
+  const first = photos.filter((p) => p.src === banner);
+  return [...first, ...photos.filter((p) => p.src !== banner)];
 }
 
 function Banner() {
@@ -58,7 +66,9 @@ function Banner() {
           </div>
         </div>
         <div className="overflow-hidden rounded-lg shadow-xl ring-4 ring-white/20 transition duration-500 hover:rotate-0 md:rotate-1">
-          {school.bannerPhoto ? (
+          {school.photos?.length ? (
+            <PhotoSlideshow photos={bannerFirst(school.photos, school.bannerPhoto)} />
+          ) : school.bannerPhoto ? (
             <img src={imageUrl(school.bannerPhoto)} alt={`${school.name} main gate`} className="block aspect-[16/10] w-full object-cover" />
           ) : (
             <SchoolGatePicture name={school.name} place={`${school.block}, ${school.district}`} />

@@ -1,11 +1,28 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export function PageHeader({ title, subtitle, homeTo = "/" }: { title: string; subtitle?: string; homeTo?: string }) {
+export function PageHeader({
+  title,
+  subtitle,
+  homeTo = "/",
+  image,
+}: {
+  title: string;
+  subtitle?: string;
+  homeTo?: string;
+  image?: { src: string; alt: string };
+}) {
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-brand-800 to-brand-600 text-white">
-      <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:20px_20px]" />
-      <div className="relative mx-auto max-w-7xl px-4 py-8">
+      {image ? (
+        <>
+          <img src={image.src} alt={image.alt} className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-900/90 via-brand-800/75 to-brand-700/40" />
+        </>
+      ) : (
+        <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:20px_20px]" />
+      )}
+      <div className={`relative mx-auto max-w-7xl px-4 ${image ? "py-12 md:py-20" : "py-8"}`}>
         <nav aria-label="Breadcrumb" className="mb-2 text-sm text-brand-100">
           <Link to={homeTo} className="hover:underline">
             Home
