@@ -4,7 +4,7 @@ import { ComingSoonNote, Section } from "../components/ui";
 import { ABOUT_CM_SOE } from "../data/common";
 import { PrincipalAvatar } from "../components/PrincipalAvatar";
 import { samplePrincipalMessage } from "../data/principal";
-import { classesLabel, displayPhone, principalLabel } from "../data/schools";
+import { classesLabel, displayPhone, imageUrl, principalLabel } from "../data/schools";
 import { useSchool, useSchoolPath } from "../schoolContext";
 
 // Rolling hills and sal trees along the bottom of the banner.
@@ -48,7 +48,11 @@ function Banner() {
           </div>
         </div>
         <div className="overflow-hidden rounded-lg shadow-xl ring-4 ring-white/20 transition duration-500 hover:rotate-0 md:rotate-1">
-          <SchoolGatePicture name={school.name} place={`${school.block}, ${school.district}`} />
+          {school.bannerPhoto ? (
+            <img src={imageUrl(school.bannerPhoto)} alt={`${school.name} main gate`} className="block aspect-[16/10] w-full object-cover" />
+          ) : (
+            <SchoolGatePicture name={school.name} place={`${school.block}, ${school.district}`} />
+          )}
         </div>
       </div>
       <Hills />
@@ -157,6 +161,29 @@ export function HomePage() {
               </div>
             </div>
           </Section>
+          {school.photos?.length ? (
+            <Section
+              title="Photo Gallery"
+              action={
+                <Link to={to("gallery")} className="text-sm font-medium text-brand-600 hover:underline">
+                  View all →
+                </Link>
+              }
+            >
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                {school.photos.slice(0, 4).map((p) => (
+                  <Link key={p.src} to={to("gallery")} className="group overflow-hidden rounded-lg ring-1 ring-slate-200">
+                    <img
+                      src={imageUrl(p.src)}
+                      alt={p.caption}
+                      loading="lazy"
+                      className="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-105"
+                    />
+                  </Link>
+                ))}
+              </div>
+            </Section>
+          ) : null}
           <Section title="Latest Notices & Circulars">
             <ComingSoonNote text="School notices, holidays and circulars will be published here." />
           </Section>

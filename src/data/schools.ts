@@ -112,6 +112,14 @@ const EXTRAS: Record<string, SchoolExtra> = {
     village: "Birbal",
     // Birbal village centre on Google Maps.
     coords: { lat: 24.2070318, lng: 83.418992 },
+    bannerPhoto: "birbal/gate.jpg",
+    photos: [
+      { src: "birbal/building.jpg", caption: "Main school building" },
+      { src: "birbal/gate.jpg", caption: "School main gate" },
+      { src: "birbal/playground.jpg", caption: "School playground" },
+      { src: "birbal/tree.jpg", caption: "Campus tree and classrooms" },
+      { src: "birbal/campus.jpg", caption: "Campus path and drinking water point" },
+    ],
     landmarks: [
       { name: "Shiv Mandir Birbal", type: "Temple", distance: "In Birbal village" },
       { name: "Makri", type: "Village (Birbal Gram Panchayat)", distance: "About 4 km north" },
@@ -164,4 +172,8 @@ export function mapEmbedUrl(s: School): string {
 
 export function mapLink(s: School): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery(s))}`;
+}
+
+export function imageUrl(file: string): string {
+  return `${import.meta.env.BASE_URL}images/${file}`;
 }

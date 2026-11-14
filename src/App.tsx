@@ -7,6 +7,7 @@ import { AdmissionsPage } from "./pages/AdmissionsPage";
 import { ComingSoonPage } from "./pages/ComingSoonPage";
 import { ContactPage } from "./pages/ContactPage";
 import { DirectoryPage } from "./pages/DirectoryPage";
+import { GalleryPage } from "./pages/GalleryPage";
 import { HomePage } from "./pages/HomePage";
 import { PrincipalPage } from "./pages/PrincipalPage";
 import { SchoolInfoPage } from "./pages/SchoolInfoPage";
@@ -23,7 +24,8 @@ export default function App() {
           <Route path="academics" element={<AcademicsPage />} />
           <Route path="admissions" element={<AdmissionsPage />} />
           <Route path="principal" element={<PrincipalPage />} />
-          {Object.keys(comingSoonPages).map((path) => (
+          <Route path="gallery" element={<GalleryPage />} />
+          {Object.keys(comingSoonPages).filter((path) => path !== "gallery").map((path) => (
             <Route key={path} path={path} element={<ComingSoonPage />} />
           ))}
           <Route path="contact" element={<ContactPage />} />

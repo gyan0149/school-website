@@ -10,6 +10,11 @@ export interface SchoolBase {
   hmPhone: string;
 }
 
+export interface SchoolPhoto {
+  src: string;
+  caption: string;
+}
+
 export interface Landmark {
   name: string;
   type: string;
@@ -24,6 +29,9 @@ export interface SchoolExtra {
   village?: string;
   coords?: { lat: number; lng: number };
   landmarks?: Landmark[];
+  // Real photos (file names under public/images/); bannerPhoto replaces the demo gate picture.
+  bannerPhoto?: string;
+  photos?: SchoolPhoto[];
 }
 
 export type School = SchoolBase & SchoolExtra;
