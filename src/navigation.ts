@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
   { label: "School Information", path: "school-information" },
   { label: "Academics", path: "academics" },
   { label: "Admissions", path: "admissions" },
-  { label: "Principal", path: "principal" },
+  { label: "Principal's Desk", path: "principal" },
   { label: "Notices & Circulars", path: "notices" },
   { label: "Results & Achievements", path: "results" },
   { label: "Infrastructure", path: "infrastructure" },

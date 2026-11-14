@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { SchoolGatePicture } from "../components/SchoolGatePicture";
 import { ComingSoonNote, Section } from "../components/ui";
 import { ABOUT_CM_SOE } from "../data/common";
+import { principalInitials, samplePrincipalMessage } from "../data/principal";
 import { classesLabel, displayPhone, principalLabel } from "../data/schools";
 import { useSchool, useSchoolPath } from "../schoolContext";
 
@@ -119,14 +120,11 @@ export function HomePage() {
     { label: "Admissions", path: "admissions", icon: "📝" },
     { label: "Academics", path: "academics", icon: "📚" },
     { label: "School Information", path: "school-information", icon: "🏫" },
-    { label: "Principal", path: "principal", icon: "👤" },
+    { label: "Principal's Desk", path: "principal", icon: "👤" },
     { label: "Location", path: "contact", icon: "📍" },
     { label: "Contact Us", path: "contact", icon: "☎️" },
   ];
   const name = principalLabel(school);
-  const initials = school.hmName
-    ? school.hmName.replace(/^(Dr|Md)\.?\s+/i, "").split(" ").map((p) => p[0]).join("").slice(0, 2)
-    : "HM";
 
   return (
     <>
@@ -135,6 +133,30 @@ export function HomePage() {
       <DigitalServices />
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
+          <Section title="From the Principal's Desk">
+            <div className="flex flex-col gap-5 sm:flex-row">
+              <div className="flex shrink-0 flex-col items-center text-center sm:w-36">
+                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-600 text-3xl font-bold text-white ring-4 ring-accent-400">
+                  {principalInitials(school.hmName)}
+                </div>
+                <div className="mt-2 font-semibold text-brand-800">{name}</div>
+                <div className="text-xs text-slate-500">Principal</div>
+                <a href={`tel:+91${school.hmPhone}`} className="mt-1 text-sm text-brand-600 hover:underline">
+                  ☎ {displayPhone(school.hmPhone)}
+                </a>
+              </div>
+              <div className="min-w-0 flex-1">
+                <blockquote className="border-l-4 border-accent-400 pl-4 text-slate-700 italic">
+                  <p>{samplePrincipalMessage(school)[0]}</p>
+                  <p className="mt-2">{samplePrincipalMessage(school)[1]}</p>
+                </blockquote>
+                <p className="mt-2 text-xs text-amber-700">Sample message · the Principal's own message will be added.</p>
+                <Link to={to("principal")} className="mt-3 inline-block text-sm font-medium text-brand-600 hover:underline">
+                  Read the full message →
+                </Link>
+              </div>
+            </div>
+          </Section>
           <Section title="Latest Notices & Circulars">
             <ComingSoonNote text="School notices, holidays and circulars will be published here." />
           </Section>
@@ -164,19 +186,6 @@ export function HomePage() {
                 <div className="font-semibold text-brand-800">Shri Hemant Soren</div>
                 <div className="text-sm text-slate-600">Hon'ble Chief Minister, Jharkhand</div>
                 <div className="text-sm text-slate-500">माननीय मुख्यमंत्री, झारखंड</div>
-              </div>
-            </div>
-          </Section>
-          <Section title="Principal">
-            <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xl font-bold text-brand-700">
-                {initials}
-              </div>
-              <div>
-                <div className="font-semibold">{name}</div>
-                <a href={`tel:+91${school.hmPhone}`} className="text-sm text-brand-600 hover:underline">
-                  ☎ {displayPhone(school.hmPhone)}
-                </a>
               </div>
             </div>
           </Section>
