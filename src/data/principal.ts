@@ -2,6 +2,14 @@
 import type { School } from "../types/school";
 
 export function samplePrincipalMessage(s: School): string[] {
+  if (s.story) {
+    return [
+      `Johar! A warm welcome to ${s.name}.`,
+      `Our school started in ${s.established} with classes 1 to 5 and has grown step by step into a full +2 school, with Intermediate classes since 2017. In 2026 it was selected as a CM School of Excellence, and we are proud to carry this responsibility.`,
+      `${s.story.objective} ${s.story.commitment}`,
+      "I request parents to stay in touch with the class teachers, attend parent-teacher meetings and visit the school whenever needed. Together we can build a bright future for our children.",
+    ];
+  }
   return [
     `Johar! A warm welcome to ${s.name}.`,
     `As a CM School of Excellence, our aim is to give every child of ${s.block} and the nearby villages quality education, free of cost, with good classrooms, labs, a library and caring teachers.`,

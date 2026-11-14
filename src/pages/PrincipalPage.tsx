@@ -1,6 +1,7 @@
 import { SchoolPageHeader } from "../components/SchoolPageHeader";
 import { ComingSoonNote, PageBody, Section } from "../components/ui";
 import { PrincipalAvatar } from "../components/PrincipalAvatar";
+import { HistoryTimeline, ObjectiveCards, SchoolPhotoFigure } from "../components/SchoolStory";
 import { PRINCIPAL_PRIORITIES, samplePrincipalMessage } from "../data/principal";
 import { displayPhone, principalLabel } from "../data/schools";
 import { useSchool } from "../schoolContext";
@@ -100,8 +101,29 @@ export function PrincipalPage() {
             <Section title="Profile">
               <ComingSoonNote text="Qualifications, experience and achievements of the Principal will be added here." />
             </Section>
+            {school.photos?.length ? (
+              <Section title="Our Campus">
+                <SchoolPhotoFigure index={1} />
+              </Section>
+            ) : null}
           </aside>
         </div>
+
+        {school.story && (
+          <>
+            <Section title="Our Objective & Commitment">
+              <ObjectiveCards story={school.story} />
+            </Section>
+            <Section title={`Our Journey since ${school.established}`}>
+              <div className="grid gap-6 md:grid-cols-5">
+                <div className="md:col-span-3">
+                  <HistoryTimeline history={school.story.history} />
+                </div>
+                <SchoolPhotoFigure index={4} className="self-start md:col-span-2" />
+              </div>
+            </Section>
+          </>
+        )}
 
         <Section title="Our Priorities" action={<SampleTag />}>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

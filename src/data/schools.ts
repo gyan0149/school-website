@@ -120,13 +120,37 @@ const EXTRAS: Record<string, SchoolExtra> = {
       { src: "birbal/tree.jpg", caption: "Campus tree and classrooms" },
       { src: "birbal/campus.jpg", caption: "Campus path and drinking water point" },
     ],
+    story: {
+      location:
+        "CM SoE Govt. UPG +2 HS Birbal is in Sagma block of Garhwa district, 5.2 km south of NH-39 (Bilaspur, near Wyndhamganj, UP) and 6 km from the block headquarters. The nearest railway station is Wyndhamganj (UP), just 6 km away; Banshidhar Nagar Untari (Jharkhand) station is 15 km away.",
+      distances: [
+        { place: "NH-39 (Bilaspur, near Wyndhamganj, UP)", distance: "5.2 km" },
+        { place: "Sagma block headquarters", distance: "6 km" },
+        { place: "Wyndhamganj Railway Station (UP), nearest", distance: "6 km" },
+        { place: "Banshidhar Nagar Untari Railway Station (Jharkhand)", distance: "15 km" },
+      ],
+      history: [
+        { year: "1957", text: "School founded with classes 1 to 5." },
+        { year: "1970s", text: "Upgraded up to class 8." },
+        { year: "2011", text: "High school recognition (2011–13 session); first class 9 students enrolled." },
+        { year: "2017", text: "Recognised for 10+2 (Intermediate) classes." },
+        { year: "2026", text: "Selected as a CM School of Excellence by Chief Minister Shri Hemant Soren." },
+      ],
+      objective:
+        "The objective of the school is to provide students with better opportunities for quality education and to groom each one with discipline, moral values, sports and overall development.",
+      commitment:
+        "Our commitment is to ensure that every student excels in the field of education and brings pride and glory to the school, family and society.",
+    },
     landmarks: [
       { name: "Shiv Mandir Birbal", type: "Temple", distance: "In Birbal village" },
       { name: "Makri", type: "Village (Birbal Gram Panchayat)", distance: "About 4 km north" },
       { name: "Sondiha and Shiv Mandir Sondiha", type: "Village / temple", distance: "About 3 km north-east" },
       { name: "Putur and Putur Dam", type: "Village / dam", distance: "About 2.5 km east" },
       { name: "Kalma", type: "Village", distance: "About 3 km south-east" },
-      { name: "Sagma (block headquarters)", type: "Block office", distance: "About 5 km east" },
+      { name: "Sagma (block headquarters)", type: "Block office", distance: "About 6 km" },
+      { name: "NH-39 at Bilaspur (near Wyndhamganj, UP)", type: "National highway", distance: "About 5.2 km north" },
+      { name: "Wyndhamganj Railway Station (UP)", type: "Nearest railway station", distance: "About 6 km" },
+      { name: "Banshidhar Nagar Untari Railway Station", type: "Railway station (Jharkhand)", distance: "About 15 km" },
       { name: "Uttar Pradesh border", type: "State border", distance: "About 4–5 km west" },
       { name: "Garhwa (district headquarters)", type: "Town", distance: "About 57 km" },
     ],

@@ -4,6 +4,7 @@ import { LocationSection } from "../components/LocationSection";
 import { PhotoSlideshow } from "../components/PhotoSlideshow";
 import { PrincipalAvatar } from "../components/PrincipalAvatar";
 import { SchoolGatePicture } from "../components/SchoolGatePicture";
+import { DistanceList, HistoryTimeline, ObjectiveCards, SchoolPhotoFigure } from "../components/SchoolStory";
 import { BulletList, ComingSoonNote, InfoGrid, Section } from "../components/ui";
 import { ABOUT_CM_SOE, admissionGuidelines, requiredDocuments, STREAMS, subjectGroups, welfareSchemes } from "../data/common";
 import { samplePrincipalMessage } from "../data/principal";
@@ -54,7 +55,7 @@ function Banner() {
           <h1 className="mt-2 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">{school.name}</h1>
           <p className="mt-3 max-w-xl text-brand-100">
             Block {school.block}, District {school.district}, Jharkhand.
-            <span className="hidden sm:inline"> {ABOUT_CM_SOE}</span>
+            <span className="hidden sm:inline"> {school.story?.objective ?? ABOUT_CM_SOE}</span>
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <a href={`tel:+91${school.hmPhone}`} className="rounded-md bg-accent-500 px-5 py-2.5 font-semibold text-brand-900 hover:bg-accent-400">
@@ -108,11 +109,12 @@ function Highlights() {
 }
 
 // In-page shortcuts so visitors can jump to any part of this long page.
-function JumpLinks({ hasPhotos }: { hasPhotos: boolean }) {
+function JumpLinks({ hasPhotos, hasStory }: { hasPhotos: boolean; hasStory: boolean }) {
   const links = [
     { id: "principal-desk", label: "Principal" },
     ...(hasPhotos ? [{ id: "photos", label: "Photos" }] : []),
     { id: "about", label: "About" },
+    ...(hasStory ? [{ id: "history", label: "History" }] : []),
     { id: "academics", label: "Academics" },
     { id: "admissions", label: "Admissions" },
     { id: "schemes", label: "Schemes" },
@@ -181,12 +183,13 @@ export function HomePage() {
   const message = samplePrincipalMessage(school);
   const groups = subjectGroups.filter((g) => g.to >= school.classFrom && g.from <= school.classTo);
   const hasPhotos = Boolean(school.photos?.length);
+  const story = school.story;
 
   return (
     <>
       <Banner />
       <Highlights />
-      <JumpLinks hasPhotos={hasPhotos} />
+      <JumpLinks hasPhotos={hasPhotos} hasStory={Boolean(story)} />
 
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 md:gap-8 md:py-8 lg:grid-cols-3">
         <div className="min-w-0 space-y-6 md:space-y-8 lg:col-span-2">
@@ -239,7 +242,17 @@ export function HomePage() {
           )}
 
           <Section title="About the School" id="about">
-            <p className="mb-4 text-slate-700">{ABOUT_CM_SOE}</p>
+            {story ? (
+              <div className="mb-5 space-y-5">
+                <div className="grid gap-5 md:grid-cols-5">
+                  <p className="leading-relaxed text-slate-700 md:col-span-3">📍 {story.location}</p>
+                  <SchoolPhotoFigure index={0} className="md:col-span-2" />
+                </div>
+                <ObjectiveCards story={story} />
+              </div>
+            ) : (
+              <p className="mb-4 text-slate-700">{ABOUT_CM_SOE}</p>
+            )}
             <InfoGrid
               items={[
                 { label: "School name", value: school.name },
@@ -254,6 +267,21 @@ export function HomePage() {
             />
             <MoreLink to={to("school-information")}>Full school information</MoreLink>
           </Section>
+
+          {story && (
+            <Section title="Our Journey since 1957" id="history">
+              <div className="grid gap-6 md:grid-cols-5">
+                <div className="md:col-span-3">
+                  <HistoryTimeline history={story.history} />
+                </div>
+                <div className="space-y-4 md:col-span-2">
+                  <SchoolPhotoFigure index={1} />
+                  <SchoolPhotoFigure index={3} className="hidden md:block" />
+                </div>
+              </div>
+              <MoreLink to={to("about")}>Read more about the school</MoreLink>
+            </Section>
+          )}
 
           <Section title="Academics" id="academics">
             <ul className="divide-y divide-slate-100">
@@ -362,6 +390,21 @@ export function HomePage() {
               </p>
             </div>
           </Section>
+
+          {story && (
+            <Section title="How to Reach">
+              <DistanceList distances={story.distances} />
+            </Section>
+          )}
+
+          {hasPhotos && (
+            <Section title="Life on Campus">
+              <div className="space-y-3">
+                <SchoolPhotoFigure index={2} />
+                <SchoolPhotoFigure index={4} />
+              </div>
+            </Section>
+          )}
 
           <Section title="Coming Soon">
             <ul className="space-y-2 text-sm">

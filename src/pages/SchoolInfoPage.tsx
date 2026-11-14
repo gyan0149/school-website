@@ -1,5 +1,6 @@
 import { LocationSection } from "../components/LocationSection";
 import { SchoolPageHeader } from "../components/SchoolPageHeader";
+import { DistanceList, SchoolPhotoFigure } from "../components/SchoolStory";
 import { ComingSoonNote, InfoGrid, PageBody, Section } from "../components/ui";
 import { STREAMS, welfareSchemes } from "../data/common";
 import { classesLabel, principalLabel, schoolAddress } from "../data/schools";
@@ -20,10 +21,20 @@ export function SchoolInfoPage() {
               { label: "Category", value: "CM School of Excellence" },
               { label: "Classes", value: classesLabel(school) },
               { label: "Principal / HM", value: principalLabel(school) },
+              ...(school.established ? [{ label: "Established", value: school.established }] : []),
               ...(school.totalTeachers ? [{ label: "Total teachers", value: school.totalTeachers }] : []),
+              ...(school.story ? school.story.history.slice(1).map((m) => ({ label: m.year, value: m.text })) : []),
             ]}
           />
         </Section>
+
+        {school.photos?.length ? (
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {[0, 1, 3, 4].map((i) => (
+              <SchoolPhotoFigure key={i} index={i} />
+            ))}
+          </div>
+        ) : null}
 
         <div className="grid gap-8 md:grid-cols-2">
           <Section title="Courses">
@@ -46,6 +57,13 @@ export function SchoolInfoPage() {
             <ComingSoonNote text="Class-wise student strength and teacher details will be added here." />
           </Section>
         </div>
+
+        {school.story && (
+          <Section title="How to Reach">
+            <p className="mb-3 text-slate-700">{school.story.location}</p>
+            <DistanceList distances={school.story.distances} />
+          </Section>
+        )}
 
         <Section title="Facilities">
           <ComingSoonNote text="Details of classrooms, labs, library, drinking water, toilets and other facilities will be added here." />

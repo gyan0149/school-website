@@ -32,6 +32,26 @@ export interface SchoolExtra {
   // Real photos (file names under public/images/); bannerPhoto replaces the demo gate picture.
   bannerPhoto?: string;
   photos?: SchoolPhoto[];
+  story?: SchoolStory;
+}
+
+export interface Milestone {
+  year: string;
+  text: string;
+}
+
+export interface Distance {
+  place: string;
+  distance: string;
+}
+
+// The school's own write-up: location, history and aims.
+export interface SchoolStory {
+  location: string;
+  distances: Distance[];
+  history: Milestone[];
+  objective: string;
+  commitment: string;
 }
 
 export type School = SchoolBase & SchoolExtra;
