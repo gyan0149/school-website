@@ -29,7 +29,7 @@ export function PrincipalPage() {
           <div className="grid gap-6 bg-gradient-to-r from-brand-800 to-brand-600 p-6 text-white md:grid-cols-[auto_1fr_auto] md:items-center">
             <div className="flex flex-col items-center gap-2">
               <PrincipalAvatar className="h-32 w-32 ring-4 ring-accent-400" />
-              <span className="text-xs text-brand-100">Sample photo</span>
+              <span className="text-xs text-brand-100">Photo coming soon</span>
             </div>
             <div className="text-center md:text-left">
               <p className="text-sm font-semibold tracking-wide text-accent-400 uppercase">Principal / Headmaster</p>

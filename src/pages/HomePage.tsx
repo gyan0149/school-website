@@ -138,7 +138,7 @@ export function HomePage() {
             <div className="flex flex-col gap-5 sm:flex-row">
               <div className="flex shrink-0 flex-col items-center text-center sm:w-36">
                 <PrincipalAvatar className="h-24 w-24 ring-4 ring-accent-400" />
-                <span className="mt-1 text-[11px] text-slate-400">Sample photo</span>
+                <span className="mt-1 text-[11px] text-slate-400">Photo coming soon</span>
                 <div className="mt-1 font-semibold text-brand-800">{name}</div>
                 <div className="text-xs text-slate-500">Principal</div>
                 <a href={`tel:+91${school.hmPhone}`} className="mt-1 text-sm text-brand-600 hover:underline">
