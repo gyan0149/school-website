@@ -151,6 +151,22 @@ export function HomePage() {
         </div>
 
         <aside className="space-y-8">
+          <Section title="Hon'ble Chief Minister">
+            <div className="flex items-center gap-4">
+              <img
+                src={`${import.meta.env.BASE_URL}images/hemant-soren.jpg`}
+                alt="Shri Hemant Soren"
+                width={96}
+                height={96}
+                className="h-24 w-24 shrink-0 rounded-full object-cover ring-4 ring-accent-400"
+              />
+              <div>
+                <div className="font-semibold text-brand-800">Shri Hemant Soren</div>
+                <div className="text-sm text-slate-600">Hon'ble Chief Minister, Jharkhand</div>
+                <div className="text-sm text-slate-500">माननीय मुख्यमंत्री, झारखंड</div>
+              </div>
+            </div>
+          </Section>
           <Section title="Principal">
             <div className="flex items-center gap-3">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xl font-bold text-brand-700">
