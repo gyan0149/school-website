@@ -16,13 +16,3 @@ export const PRINCIPAL_PRIORITIES = [
   { icon: "🏑", title: "Sports & culture", text: "Hockey, football, athletics, music and Jharkhand's folk traditions." },
   { icon: "🤝", title: "Parents as partners", text: "Regular PTMs and open communication with families." },
 ];
-
-export function principalInitials(name: string | null): string {
-  if (!name) return "HM";
-  return name
-    .replace(/^(Dr|Md)\.?\s+/i, "")
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2);
-}

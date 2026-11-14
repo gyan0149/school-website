@@ -1,6 +1,7 @@
 import { SchoolPageHeader } from "../components/SchoolPageHeader";
 import { ComingSoonNote, PageBody, Section } from "../components/ui";
-import { PRINCIPAL_PRIORITIES, principalInitials, samplePrincipalMessage } from "../data/principal";
+import { PrincipalAvatar } from "../components/PrincipalAvatar";
+import { PRINCIPAL_PRIORITIES, samplePrincipalMessage } from "../data/principal";
 import { displayPhone, principalLabel } from "../data/schools";
 import { useSchool } from "../schoolContext";
 
@@ -27,10 +28,8 @@ export function PrincipalPage() {
         <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
           <div className="grid gap-6 bg-gradient-to-r from-brand-800 to-brand-600 p-6 text-white md:grid-cols-[auto_1fr_auto] md:items-center">
             <div className="flex flex-col items-center gap-2">
-              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-white/15 text-5xl font-bold ring-4 ring-accent-400">
-                {principalInitials(school.hmName)}
-              </div>
-              <span className="text-xs text-brand-100">Photo to be added</span>
+              <PrincipalAvatar className="h-32 w-32 ring-4 ring-accent-400" />
+              <span className="text-xs text-brand-100">Sample photo</span>
             </div>
             <div className="text-center md:text-left">
               <p className="text-sm font-semibold tracking-wide text-accent-400 uppercase">Principal / Headmaster</p>

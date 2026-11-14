@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { SchoolGatePicture } from "../components/SchoolGatePicture";
 import { ComingSoonNote, Section } from "../components/ui";
 import { ABOUT_CM_SOE } from "../data/common";
-import { principalInitials, samplePrincipalMessage } from "../data/principal";
+import { PrincipalAvatar } from "../components/PrincipalAvatar";
+import { samplePrincipalMessage } from "../data/principal";
 import { classesLabel, displayPhone, principalLabel } from "../data/schools";
 import { useSchool, useSchoolPath } from "../schoolContext";
 
@@ -136,10 +137,9 @@ export function HomePage() {
           <Section title="From the Principal's Desk">
             <div className="flex flex-col gap-5 sm:flex-row">
               <div className="flex shrink-0 flex-col items-center text-center sm:w-36">
-                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-600 text-3xl font-bold text-white ring-4 ring-accent-400">
-                  {principalInitials(school.hmName)}
-                </div>
-                <div className="mt-2 font-semibold text-brand-800">{name}</div>
+                <PrincipalAvatar className="h-24 w-24 ring-4 ring-accent-400" />
+                <span className="mt-1 text-[11px] text-slate-400">Sample photo</span>
+                <div className="mt-1 font-semibold text-brand-800">{name}</div>
                 <div className="text-xs text-slate-500">Principal</div>
                 <a href={`tel:+91${school.hmPhone}`} className="mt-1 text-sm text-brand-600 hover:underline">
                   ☎ {displayPhone(school.hmPhone)}
