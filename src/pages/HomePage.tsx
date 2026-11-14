@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { ComingSoonNote, PhotoPlaceholder, Section } from "../components/ui";
+import { SchoolGatePicture } from "../components/SchoolGatePicture";
+import { ComingSoonNote, Section } from "../components/ui";
 import { ABOUT_CM_SOE } from "../data/common";
 import { classesLabel, displayPhone, principalLabel } from "../data/schools";
 import { useSchool, useSchoolPath } from "../schoolContext";
@@ -45,7 +46,7 @@ function Banner() {
           </div>
         </div>
         <div className="overflow-hidden rounded-lg shadow-xl ring-4 ring-white/20 transition duration-500 hover:rotate-0 md:rotate-1">
-          <PhotoPlaceholder label="School photo (to be added)" seed={1} className="aspect-[16/10]" />
+          <SchoolGatePicture name={school.name} place={`${school.block}, ${school.district}`} />
         </div>
       </div>
       <Hills />
