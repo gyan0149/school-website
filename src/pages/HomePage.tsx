@@ -1,17 +1,27 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { SchoolGatePicture } from "../components/SchoolGatePicture";
-import { ComingSoonNote, Section } from "../components/ui";
-import { ABOUT_CM_SOE } from "../data/common";
+import { LocationSection } from "../components/LocationSection";
 import { PrincipalAvatar } from "../components/PrincipalAvatar";
+import { SchoolGatePicture } from "../components/SchoolGatePicture";
+import { BulletList, ComingSoonNote, InfoGrid, Section } from "../components/ui";
+import { ABOUT_CM_SOE, admissionGuidelines, requiredDocuments, STREAMS, subjectGroups, welfareSchemes } from "../data/common";
 import { samplePrincipalMessage } from "../data/principal";
-import { classesLabel, displayPhone, imageUrl, principalLabel } from "../data/schools";
+import {
+  classesLabel,
+  displayPhone,
+  imageUrl,
+  mapLink,
+  principalLabel,
+  schoolAddress,
+  schoolLevel,
+} from "../data/schools";
 import { useSchool, useSchoolPath } from "../schoolContext";
 
 // Rolling hills and sal trees along the bottom of the banner.
 function Hills() {
   const trees = [6, 11, 15, 63, 68, 72, 88, 93];
   return (
-    <svg viewBox="0 0 100 12" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-16 w-full md:h-24" aria-hidden>
+    <svg viewBox="0 0 100 12" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-12 w-full md:h-24" aria-hidden>
       <path d="M0 8 Q12 2 25 6 T50 5 T75 4 T100 6 V12 H0Z" fill="#0b3320" opacity="0.35" />
       {trees.map((x) => (
         <path key={x} d={`M${x} 9 l1.2 -4 l1.2 4 Z`} fill="#0b3320" opacity="0.5" />
@@ -23,28 +33,28 @@ function Hills() {
 
 function Banner() {
   const school = useSchool();
-  const to = useSchoolPath();
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-700 to-brand-600 text-white">
       <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:24px_24px]" />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 pt-12 pb-24 md:grid-cols-2 md:pt-16 md:pb-32">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 pt-6 pb-16 md:grid-cols-2 md:gap-8 md:pt-16 md:pb-32">
         <div>
           <span className="mb-3 inline-block rounded-full bg-white/10 px-3 py-1 text-sm ring-1 ring-white/20">🙏 Johar! Welcome</span>
-          <p className="text-sm font-semibold tracking-wide text-accent-400 uppercase">
+          <p className="text-xs font-semibold tracking-wide text-accent-400 uppercase sm:text-sm">
             CM School of Excellence · {classesLabel(school)}
             {school.established ? ` · Est. ${school.established}` : ""}
           </p>
-          <h1 className="mt-2 text-3xl leading-tight font-bold md:text-4xl">{school.name}</h1>
-          <p className="mt-4 max-w-xl text-brand-100">
-            Block {school.block}, District {school.district}, Jharkhand. {ABOUT_CM_SOE}
+          <h1 className="mt-2 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">{school.name}</h1>
+          <p className="mt-3 max-w-xl text-brand-100">
+            Block {school.block}, District {school.district}, Jharkhand.
+            <span className="hidden sm:inline"> {ABOUT_CM_SOE}</span>
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link to={to("admissions")} className="rounded-md bg-accent-500 px-5 py-2.5 font-semibold text-brand-900 hover:bg-accent-400">
-              Admissions
-            </Link>
-            <Link to={to("contact")} className="rounded-md border border-white/40 px-5 py-2.5 font-semibold hover:bg-white/10">
-              Contact & location
-            </Link>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a href={`tel:+91${school.hmPhone}`} className="rounded-md bg-accent-500 px-5 py-2.5 font-semibold text-brand-900 hover:bg-accent-400">
+              ☎ Call school
+            </a>
+            <a href="#location" className="rounded-md border border-white/40 px-5 py-2.5 font-semibold hover:bg-white/10">
+              📍 Location
+            </a>
           </div>
         </div>
         <div className="overflow-hidden rounded-lg shadow-xl ring-4 ring-white/20 transition duration-500 hover:rotate-0 md:rotate-1">
@@ -71,19 +81,49 @@ function Highlights() {
     ...(school.totalTeachers ? [{ icon: "👩🏽‍🏫", label: "Teachers", value: String(school.totalTeachers) }] : []),
   ];
   return (
-    <div className="relative mx-auto -mt-12 max-w-7xl px-4">
+    <div className="relative mx-auto -mt-8 max-w-7xl px-4 md:-mt-12">
       <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-slate-200 shadow-md sm:grid-cols-3 lg:grid-flow-col lg:grid-cols-none">
         {items.map((h) => (
-          <div key={h.label} className="group bg-white px-4 py-5 text-center transition hover:bg-brand-50">
-            <div className="text-2xl transition group-hover:scale-110" aria-hidden>
+          <div key={h.label} className="group bg-white px-3 py-4 text-center transition hover:bg-brand-50 md:px-4 md:py-5">
+            <div className="text-xl transition group-hover:scale-110 md:text-2xl" aria-hidden>
               {h.icon}
             </div>
-            <div className="mt-1 text-lg font-bold break-words text-brand-700 md:text-xl">{h.value}</div>
-            <div className="mt-1 text-xs font-medium tracking-wide text-slate-500 uppercase">{h.label}</div>
+            <div className="mt-1 text-base font-bold break-words text-brand-700 md:text-xl">{h.value}</div>
+            <div className="mt-0.5 text-[11px] font-medium tracking-wide text-slate-500 uppercase md:text-xs">{h.label}</div>
           </div>
         ))}
       </div>
     </div>
+  );
+}
+
+// In-page shortcuts so visitors can jump to any part of this long page.
+function JumpLinks({ hasPhotos }: { hasPhotos: boolean }) {
+  const links = [
+    { id: "principal-desk", label: "Principal" },
+    ...(hasPhotos ? [{ id: "photos", label: "Photos" }] : []),
+    { id: "about", label: "About" },
+    { id: "academics", label: "Academics" },
+    { id: "admissions", label: "Admissions" },
+    { id: "schemes", label: "Schemes" },
+    { id: "location", label: "Location" },
+    { id: "contact", label: "Contact" },
+  ];
+  return (
+    <nav aria-label="On this page" className="mx-auto max-w-7xl px-4 pt-6">
+      <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:flex-wrap">
+        {links.map((l) => (
+          <li key={l.id} className="shrink-0">
+            <a
+              href={`#${l.id}`}
+              className="block rounded-full bg-white px-4 py-1.5 text-sm font-medium text-brand-700 ring-1 ring-slate-200 hover:bg-brand-50 hover:ring-brand-600"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
@@ -94,51 +134,53 @@ const UPCOMING_FEATURES = [
 
 function DigitalServices() {
   return (
-    <div className="mx-auto max-w-7xl px-4 pt-8">
-      <div className="flex flex-col gap-4 rounded-xl border border-dashed border-accent-500 bg-amber-50/60 p-5 md:flex-row md:items-center">
-        <div className="shrink-0">
-          <span className="rounded-full bg-accent-500 px-2.5 py-0.5 text-xs font-bold text-brand-900 uppercase">Coming soon</span>
-          <p className="mt-2 font-semibold text-brand-800">New digital services</p>
-        </div>
-        <ul className="grid flex-1 gap-3 sm:grid-cols-2">
-          {UPCOMING_FEATURES.map((f) => (
-            <li key={f.title} className="flex items-start gap-3 rounded-lg bg-white p-3 ring-1 ring-amber-200">
-              <span className="text-2xl" aria-hidden>
-                {f.icon}
-              </span>
-              <div>
-                <div className="text-sm font-semibold text-slate-900">{f.title}</div>
-                <div className="text-sm text-slate-600">{f.text}</div>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <div className="flex flex-col gap-4 rounded-xl border border-dashed border-accent-500 bg-amber-50/60 p-5 md:flex-row md:items-center">
+      <div className="shrink-0">
+        <span className="rounded-full bg-accent-500 px-2.5 py-0.5 text-xs font-bold text-brand-900 uppercase">Coming soon</span>
+        <p className="mt-2 font-semibold text-brand-800">New digital services</p>
       </div>
+      <ul className="grid flex-1 gap-3 sm:grid-cols-2">
+        {UPCOMING_FEATURES.map((f) => (
+          <li key={f.title} className="flex items-start gap-3 rounded-lg bg-white p-3 ring-1 ring-amber-200">
+            <span className="text-2xl" aria-hidden>
+              {f.icon}
+            </span>
+            <div>
+              <div className="text-sm font-semibold text-slate-900">{f.title}</div>
+              <div className="text-sm text-slate-600">{f.text}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
+  );
+}
+
+function MoreLink({ to, children }: { to: string; children: ReactNode }) {
+  return (
+    <Link to={to} className="mt-4 inline-block text-sm font-medium text-brand-600 hover:underline">
+      {children} →
+    </Link>
   );
 }
 
 export function HomePage() {
   const school = useSchool();
   const to = useSchoolPath();
-  const quickLinks = [
-    { label: "Admissions", path: "admissions", icon: "📝" },
-    { label: "Academics", path: "academics", icon: "📚" },
-    { label: "School Information", path: "school-information", icon: "🏫" },
-    { label: "Principal's Desk", path: "principal", icon: "👤" },
-    { label: "Location", path: "contact", icon: "📍" },
-    { label: "Contact Us", path: "contact", icon: "☎️" },
-  ];
   const name = principalLabel(school);
+  const message = samplePrincipalMessage(school);
+  const groups = subjectGroups.filter((g) => g.to >= school.classFrom && g.from <= school.classTo);
+  const hasPhotos = Boolean(school.photos?.length);
 
   return (
     <>
       <Banner />
       <Highlights />
-      <DigitalServices />
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-3">
-        <div className="space-y-8 lg:col-span-2">
-          <Section title="From the Principal's Desk">
+      <JumpLinks hasPhotos={hasPhotos} />
+
+      <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 md:gap-8 md:py-8 lg:grid-cols-3">
+        <div className="min-w-0 space-y-6 md:space-y-8 lg:col-span-2">
+          <Section title="From the Principal's Desk" id="principal-desk">
             <div className="flex flex-col gap-5 sm:flex-row">
               <div className="flex shrink-0 flex-col items-center text-center sm:w-36">
                 <PrincipalAvatar className="h-24 w-24 ring-4 ring-accent-400" />
@@ -150,64 +192,130 @@ export function HomePage() {
                 </a>
               </div>
               <div className="min-w-0 flex-1">
-                <blockquote className="border-l-4 border-accent-400 pl-4 text-slate-700 italic">
-                  <p>{samplePrincipalMessage(school)[0]}</p>
-                  <p className="mt-2">{samplePrincipalMessage(school)[1]}</p>
+                <blockquote className="space-y-2 border-l-4 border-accent-400 pl-4 text-slate-700 italic">
+                  {message.slice(0, 3).map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
                 </blockquote>
                 <p className="mt-2 text-xs text-amber-700">Sample message · the Principal's own message will be added.</p>
-                <Link to={to("principal")} className="mt-3 inline-block text-sm font-medium text-brand-600 hover:underline">
-                  Read the full message →
-                </Link>
+                <MoreLink to={to("principal")}>Read the full message</MoreLink>
               </div>
             </div>
           </Section>
-          {school.photos?.length ? (
-            <Section
-              title="Photo Gallery"
-              action={
-                <Link to={to("gallery")} className="text-sm font-medium text-brand-600 hover:underline">
-                  View all →
-                </Link>
-              }
-            >
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-                {school.photos.slice(0, 4).map((p) => (
-                  <Link key={p.src} to={to("gallery")} className="group overflow-hidden rounded-lg ring-1 ring-slate-200">
+
+          {hasPhotos && (
+            <Section title="Photo Gallery" id="photos">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                {school.photos!.map((p, i) => (
+                  <Link
+                    key={p.src}
+                    to={to("gallery")}
+                    className={`group relative overflow-hidden rounded-lg ring-1 ring-slate-200 ${i === 0 ? "col-span-2 md:col-span-1" : ""}`}
+                  >
                     <img
                       src={imageUrl(p.src)}
                       alt={p.caption}
                       loading="lazy"
                       className="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-105"
                     />
+                    <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-2 pt-6 pb-1.5 text-xs font-medium text-white">
+                      {p.caption}
+                    </span>
                   </Link>
                 ))}
               </div>
+              <MoreLink to={to("gallery")}>Open photo gallery</MoreLink>
             </Section>
-          ) : null}
-          <Section title="Latest Notices & Circulars">
-            <ComingSoonNote text="School notices, holidays and circulars will be published here." />
+          )}
+
+          <Section title="About the School" id="about">
+            <p className="mb-4 text-slate-700">{ABOUT_CM_SOE}</p>
+            <InfoGrid
+              items={[
+                { label: "School name", value: school.name },
+                { label: "U-DISE code", value: school.udise },
+                { label: "Address", value: schoolAddress(school) },
+                { label: "School level", value: schoolLevel(school) },
+                { label: "Classes", value: classesLabel(school) },
+                ...(school.established ? [{ label: "Established", value: school.established }] : []),
+                ...(school.totalTeachers ? [{ label: "Teachers", value: school.totalTeachers }] : []),
+                { label: "Principal / HM", value: name },
+              ]}
+            />
+            <MoreLink to={to("school-information")}>Full school information</MoreLink>
           </Section>
-          <Section title="About the School">
-            <p className="text-slate-700">
-              <strong>{school.name}</strong> is a CM School of Excellence in Block {school.block}, District {school.district},
-              Jharkhand, with classes from {school.classFrom} to {school.classTo}.
-              {school.established ? ` The school was established in ${school.established}.` : ""}
+
+          <Section title="Academics" id="academics">
+            <ul className="divide-y divide-slate-100">
+              {groups.map((g) => (
+                <li key={g.from} className="flex flex-col gap-1 py-2.5 sm:flex-row sm:gap-4">
+                  <span className="w-28 shrink-0 font-semibold text-brand-800">
+                    Class {Math.max(g.from, school.classFrom)}–{Math.min(g.to, school.classTo)}
+                  </span>
+                  <span className="text-sm text-slate-700">{g.subjects.join(", ")}</span>
+                </li>
+              ))}
+            </ul>
+            {school.classTo >= 12 && (
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <span className="text-sm font-medium text-slate-600">Streams (Class 11–12):</span>
+                {STREAMS.map((s) => (
+                  <span key={s} className="rounded-full bg-brand-50 px-3 py-1 text-sm font-medium text-brand-700">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div className="mt-4">
+              <ComingSoonNote text="Academic calendar, exam schedule and syllabus will be published soon." />
+            </div>
+            <MoreLink to={to("academics")}>Academics page</MoreLink>
+          </Section>
+
+          <Section title="Admissions" id="admissions">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="min-w-0">
+                <h3 className="mb-2 text-sm font-semibold tracking-wide text-slate-500 uppercase">Guidelines</h3>
+                <BulletList items={admissionGuidelines.slice(0, 4)} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="mb-2 text-sm font-semibold tracking-wide text-slate-500 uppercase">Documents usually required</h3>
+                <BulletList items={requiredDocuments} />
+              </div>
+            </div>
+            <p className="mt-4 rounded-md bg-brand-50 p-3 text-sm text-brand-800">
+              For admission enquiries, call the school:{" "}
+              <a href={`tel:+91${school.hmPhone}`} className="font-semibold underline">
+                {displayPhone(school.hmPhone)}
+              </a>
             </p>
-            <Link to={to("about")} className="mt-3 inline-block text-sm font-medium text-brand-600 hover:underline">
-              Read more →
-            </Link>
+          </Section>
+
+          <Section title="Student Welfare Schemes" id="schemes">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {welfareSchemes.map((s) => (
+                <div key={s.name} className="rounded-md border border-slate-200 p-3">
+                  <div className="font-medium text-brand-800">{s.name}</div>
+                  <div className="text-sm text-slate-600">{s.details}</div>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Latest Notices & Circulars" id="notices">
+            <ComingSoonNote text="School notices, holidays and circulars will be published here." />
           </Section>
         </div>
 
-        <aside className="space-y-8">
+        <aside className="min-w-0 space-y-6 md:space-y-8">
           <Section title="Hon'ble Chief Minister">
             <div className="flex items-center gap-4">
               <img
-                src={`${import.meta.env.BASE_URL}images/hemant-soren.jpg`}
+                src={imageUrl("hemant-soren.jpg")}
                 alt="Shri Hemant Soren"
                 width={96}
                 height={96}
-                className="h-24 w-24 shrink-0 rounded-full object-cover ring-4 ring-accent-400"
+                className="h-20 w-20 shrink-0 rounded-full object-cover ring-4 ring-accent-400 md:h-24 md:w-24"
               />
               <div>
                 <div className="font-semibold text-brand-800">Shri Hemant Soren</div>
@@ -216,23 +324,58 @@ export function HomePage() {
               </div>
             </div>
           </Section>
-          <Section title="Important Links">
-            <div className="grid grid-cols-2 gap-3">
-              {quickLinks.map((l) => (
-                <Link
-                  key={l.label}
-                  to={to(l.path)}
-                  className="flex flex-col items-center gap-1 rounded-md border border-slate-200 p-3 text-center text-sm font-medium text-brand-800 transition hover:-translate-y-0.5 hover:border-accent-500 hover:bg-amber-50 hover:shadow-sm"
-                >
-                  <span className="text-2xl" aria-hidden>
-                    {l.icon}
-                  </span>
-                  {l.label}
-                </Link>
-              ))}
+
+          <Section title="Contact the School" id="contact">
+            <div className="space-y-3 text-sm text-slate-700">
+              <a
+                href={`tel:+91${school.hmPhone}`}
+                className="flex items-center justify-center gap-2 rounded-md bg-brand-700 px-4 py-3 text-base font-semibold text-white hover:bg-brand-800"
+              >
+                ☎ {displayPhone(school.hmPhone)}
+              </a>
+              <a
+                href={mapLink(school)}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-2 rounded-md border border-brand-600 px-4 py-2.5 font-semibold text-brand-700 hover:bg-brand-50"
+              >
+                📍 Get directions
+              </a>
+              <p>
+                <span className="font-medium">Address:</span> {schoolAddress(school)}
+              </p>
+              <p>
+                <span className="font-medium">Principal:</span> {name}
+              </p>
+              <p>
+                <span className="font-medium">U-DISE:</span> {school.udise}
+              </p>
             </div>
           </Section>
+
+          <Section title="Coming Soon">
+            <ul className="space-y-2 text-sm">
+              {[
+                ["notices", "Notices & Circulars"],
+                ["results", "Results & Achievements"],
+                ["infrastructure", "Infrastructure"],
+                ["downloads", "Downloads"],
+              ].map(([path, label]) => (
+                <li key={path}>
+                  <Link to={to(path)} className="flex items-center justify-between rounded-md px-2 py-1.5 text-brand-800 hover:bg-amber-50">
+                    {label}
+                    <span className="text-xs text-amber-700">Soon</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Section>
         </aside>
+      </div>
+
+      <div className="mx-auto max-w-7xl space-y-6 px-4 pb-6 md:space-y-8">
+        <LocationSection />
+        <DigitalServices />
       </div>
     </>
   );

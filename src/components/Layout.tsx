@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { AFFILIATION, DEPARTMENT, govLinks } from "../data/common";
-import { displayPhone, getSchool, schoolAddress } from "../data/schools";
+import { displayPhone, getSchool, mapLink, schoolAddress } from "../data/schools";
 import { navItems } from "../navigation";
 import { SchoolContext, useSchool, useSchoolPath } from "../schoolContext";
 import { Logo } from "./Logo";
@@ -158,6 +158,37 @@ function SchoolFooter() {
   );
 }
 
+// Phone-only action bar fixed to the bottom of the screen.
+function MobileActionBar() {
+  const school = useSchool();
+  const to = useSchoolPath();
+  const item = "flex flex-1 flex-col items-center gap-0.5 py-2 text-xs font-medium";
+  return (
+    <nav
+      aria-label="Quick actions"
+      className="fixed inset-x-0 bottom-0 z-40 flex border-t border-brand-800 bg-brand-700 text-white shadow-[0_-4px_12px_rgba(0,0,0,0.15)] md:hidden"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
+      <a href={`tel:+91${school.hmPhone}`} className={`${item} bg-accent-500 text-brand-900`}>
+        <span className="text-lg" aria-hidden>☎</span>
+        Call
+      </a>
+      <a href={mapLink(school)} target="_blank" rel="noreferrer" className={item}>
+        <span className="text-lg" aria-hidden>📍</span>
+        Map
+      </a>
+      <Link to={to("principal")} className={item}>
+        <span className="text-lg" aria-hidden>👤</span>
+        Principal
+      </Link>
+      <Link to={to()} className={item}>
+        <span className="text-lg" aria-hidden>🏠</span>
+        Home
+      </Link>
+    </nav>
+  );
+}
+
 export function SchoolNotFound() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -188,7 +219,7 @@ export function SchoolLayout() {
 
   return (
     <SchoolContext.Provider value={school}>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col pb-16 md:pb-0">
         <ScrollManager />
         <TopStrip right={`☎ ${displayPhone(school.hmPhone)}`} />
         <Header />
@@ -197,6 +228,7 @@ export function SchoolLayout() {
           <Outlet />
         </main>
         <SchoolFooter />
+        <MobileActionBar />
       </div>
     </SchoolContext.Provider>
   );
