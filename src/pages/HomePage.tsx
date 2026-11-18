@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { UploadList } from "../components/Uploads";
+import { useUploads } from "../data/uploads";
 import { LocationSection } from "../components/LocationSection";
 import { PhotoSlideshow } from "../components/PhotoSlideshow";
 import { PrincipalAvatar } from "../components/PrincipalAvatar";
@@ -303,6 +305,7 @@ export function HomePage() {
   );
   const hasPhotos = Boolean(school.photos?.length);
   const story = school.story;
+  const notices = useUploads(school.udise, "notice");
 
   return (
     <>
@@ -502,7 +505,8 @@ export function HomePage() {
           </Section>
 
           <Section title="Latest Notices & Circulars" id="notices">
-            <ComingSoonNote text="School notices, holidays and circulars will be published here." />
+            <UploadList items={notices.slice(0, 3)} empty="अभी कोई सूचना नहीं है। Notices पेज पर नई सूचना जोड़ें।" compact />
+            <MoreLink to={to("notices")}>सभी सूचनाएँ / All notices</MoreLink>
           </Section>
         </div>
 
@@ -574,22 +578,28 @@ export function HomePage() {
             </Section>
           )}
 
-          <div data-tour="coming-soon">
-            <Section title="Coming Soon">
+          <div data-tour="updates">
+            <Section title="Notices, Results & Downloads">
               <ul className="space-y-2 text-sm">
                 {[
-                  ["notices", "Notices & Circulars"],
-                  ["results", "Results & Achievements"],
-                  ["infrastructure", "Infrastructure"],
-                  ["downloads", "Downloads"],
-                ].map(([path, label]) => (
+                  ["notices", "📢", "Notices & Circulars", "सूचनाएँ"],
+                  ["results", "🏆", "Results & Achievements", "रिज़ल्ट"],
+                  ["downloads", "⬇", "Downloads", "फ़ॉर्म डाउनलोड"],
+                  ["gallery", "🖼", "Photo Gallery", "फ़ोटो"],
+                ].map(([path, icon, label, hi]) => (
                   <li key={path}>
                     <Link
                       to={to(path)}
-                      className="flex items-center justify-between rounded-md px-2 py-1.5 text-brand-800 hover:bg-amber-50"
+                      className="flex items-center gap-3 rounded-md px-2 py-2 text-brand-800 ring-1 ring-slate-200 hover:bg-brand-50 hover:ring-brand-600"
                     >
-                      {label}
-                      <span className="text-xs text-amber-700">Soon</span>
+                      <span className="text-lg" aria-hidden>
+                        {icon}
+                      </span>
+                      <span className="flex-1">
+                        <span className="block font-medium">{label}</span>
+                        <span className="block text-xs text-slate-500">{hi} · देखें और अपलोड करें</span>
+                      </span>
+                      <span aria-hidden>›</span>
                     </Link>
                   </li>
                 ))}

@@ -11,6 +11,7 @@ import { GalleryPage } from "./pages/GalleryPage";
 import { HomePage } from "./pages/HomePage";
 import { PrincipalPage } from "./pages/PrincipalPage";
 import { SchoolInfoPage } from "./pages/SchoolInfoPage";
+import { UploadsPage } from "./pages/UploadsPage";
 
 export default function App() {
   return (
@@ -25,7 +26,10 @@ export default function App() {
           <Route path="admissions" element={<AdmissionsPage />} />
           <Route path="principal" element={<PrincipalPage />} />
           <Route path="gallery" element={<GalleryPage />} />
-          {Object.keys(comingSoonPages).filter((path) => path !== "gallery").map((path) => (
+          <Route path="notices" element={<UploadsPage kind="notice" />} />
+          <Route path="results" element={<UploadsPage kind="result" />} />
+          <Route path="downloads" element={<UploadsPage kind="download" />} />
+          {Object.keys(comingSoonPages).map((path) => (
             <Route key={path} path={path} element={<ComingSoonPage />} />
           ))}
           <Route path="contact" element={<ContactPage />} />
