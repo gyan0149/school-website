@@ -4,6 +4,7 @@ import { AFFILIATION, DEPARTMENT, govLinks } from "../data/common";
 import { displayPhone, getSchool, imageUrl, mapLink, schoolAddress } from "../data/schools";
 import { navItems } from "../navigation";
 import { SchoolContext, useSchool, useSchoolPath } from "../schoolContext";
+import { GuidedTour } from "./GuidedTour";
 import { Logo } from "./Logo";
 import { SohraiBorder } from "./SohraiBorder";
 import { PageBody, PageHeader } from "./ui";
@@ -44,7 +45,7 @@ function Header() {
         <Link to={to()} className="shrink-0">
           <Logo className="h-14 w-14 md:h-20 md:w-20" />
         </Link>
-        <div className="min-w-0">
+        <div className="min-w-0" data-tour="school-name">
           <p className="text-xs font-semibold tracking-wide text-accent-600 uppercase md:text-sm">
             CM School of Excellence · {AFFILIATION}
           </p>
@@ -92,7 +93,7 @@ function NavBar() {
     }`;
 
   return (
-    <nav className="sticky top-0 z-30 bg-brand-700 shadow" aria-label="Main">
+    <nav className="sticky top-0 z-30 bg-brand-700 shadow" aria-label="Main" data-tour="menu">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between lg:hidden">
           <span className="py-3 text-sm font-semibold text-white">Menu</span>
@@ -109,7 +110,7 @@ function NavBar() {
         <ul className={`${open ? "block" : "hidden"} pb-2 lg:flex lg:flex-wrap lg:pb-0`}>
           {navItems.map((item) => (
             <li key={item.path}>
-              <NavLink to={to(item.path)} end={item.path === ""} className={linkClass} onClick={() => setOpen(false)}>
+              <NavLink to={to(item.path)} end={item.path === ""} className={linkClass} onClick={() => setOpen(false)} data-hint={item.hint}>
                 {item.label}
               </NavLink>
             </li>
@@ -181,6 +182,7 @@ function MobileActionBar() {
   return (
     <nav
       aria-label="Quick actions"
+      data-tour="action-bar"
       className="fixed inset-x-0 bottom-0 z-40 flex border-t border-brand-800 bg-brand-700 text-white shadow-[0_-4px_12px_rgba(0,0,0,0.15)] md:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
@@ -244,6 +246,7 @@ export function SchoolLayout() {
         </main>
         <SchoolFooter />
         <MobileActionBar />
+        <GuidedTour />
       </div>
     </SchoolContext.Provider>
   );

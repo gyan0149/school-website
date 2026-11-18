@@ -2,21 +2,23 @@
 export interface NavItem {
   label: string;
   path: string;
+  // Hover hint in Hindi: what opens on click.
+  hint: string;
 }
 
 export const navItems: NavItem[] = [
-  { label: "Home", path: "" },
-  { label: "About School", path: "about" },
-  { label: "School Information", path: "school-information" },
-  { label: "Academics", path: "academics" },
-  { label: "Admissions", path: "admissions" },
-  { label: "Principal's Desk", path: "principal" },
-  { label: "Notices & Circulars", path: "notices" },
-  { label: "Results & Achievements", path: "results" },
-  { label: "Infrastructure", path: "infrastructure" },
-  { label: "Photo Gallery", path: "gallery" },
-  { label: "Downloads", path: "downloads" },
-  { label: "Contact Us", path: "contact" },
+  { label: "Home", path: "", hint: "मुख्य पेज" },
+  { label: "About School", path: "about", hint: "स्कूल का इतिहास और जानकारी" },
+  { label: "School Information", path: "school-information", hint: "कक्षाएँ, शिक्षक, सुविधाएँ" },
+  { label: "Academics", path: "academics", hint: "विषय और स्ट्रीम" },
+  { label: "Admissions", path: "admissions", hint: "एडमिशन के नियम और ज़रूरी कागज़ात" },
+  { label: "Principal's Desk", path: "principal", hint: "प्रधानाध्यापक का संदेश" },
+  { label: "Notices & Circulars", path: "notices", hint: "नोटिस और सूचनाएँ (जल्द)" },
+  { label: "Results & Achievements", path: "results", hint: "परीक्षा परिणाम (जल्द)" },
+  { label: "Infrastructure", path: "infrastructure", hint: "भवन, लैब, लाइब्रेरी (जल्द)" },
+  { label: "Photo Gallery", path: "gallery", hint: "स्कूल की फ़ोटो" },
+  { label: "Downloads", path: "downloads", hint: "फ़ॉर्म और दस्तावेज़ (जल्द)" },
+  { label: "Contact Us", path: "contact", hint: "फ़ोन, पता और नक्शा" },
 ];
 
 // Sections with no real data yet; shown as "Coming soon".
