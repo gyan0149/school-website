@@ -17,6 +17,7 @@ const STEPS: TourStep[] = [
     en: "A 1-minute guide to this school website.",
   },
   { target: "school-name", title: "स्कूल का नाम", text: "यहाँ स्कूल का नाम, पता और U-DISE कोड दिखता है।", en: "School name, address and U-DISE code." },
+  { target: "lang", title: "हिंदी / English", text: "इस बटन से पूरी वेबसाइट हिंदी या अंग्रेज़ी में देखें।", en: "Switch the whole website between Hindi and English." },
   {
     target: "menu",
     title: "मेनू",
@@ -25,17 +26,24 @@ const STEPS: TourStep[] = [
   },
   { target: "call", title: "फ़ोन करें", text: "इस बटन पर क्लिक करते ही सीधे स्कूल को फ़ोन लग जाएगा।", en: "Tap to call the school." },
   { target: "location", title: "लोकेशन", text: "यहाँ क्लिक करें, स्कूल का नक्शा और आसपास के लैंडमार्क दिखेंगे।", en: "See the school on the map." },
+  { target: "ticker", title: "चलती सूचनाएँ", text: "स्कूल की ताज़ा सूचनाएँ यहाँ चलती रहती हैं। किसी सूचना पर क्लिक करके पूरी जानकारी देखें।", en: "Latest notices scroll here; tap one to open it." },
   { target: "photos", title: "स्कूल की फ़ोटो", text: "यहाँ स्कूल की फ़ोटो दिखती हैं। ‹ › बटन से अगली फ़ोटो देखें।", en: "School photos." },
   { target: "highlights", title: "एक नज़र में", text: "कक्षाएँ, ज़िला, प्रखंड, स्थापना वर्ष: मुख्य जानकारी एक नज़र में।", en: "Key facts at a glance." },
   { target: "jump-links", title: "सीधे पहुँचें", text: "इन बटनों से इसी पेज के किसी भी भाग पर तुरंत पहुँचें।", en: "Jump to any part of this page." },
   { target: "principal", title: "प्रधानाध्यापक का संदेश", text: "प्रधानाध्यापक की फ़ोटो, संदेश और फ़ोन नंबर यहाँ है।", en: "Principal's photo, message and phone." },
+  {
+    target: "ai",
+    title: "AI से पढ़ाई",
+    text: "छात्र यहाँ AI से सवाल पूछ सकते हैं, क्विज़ दे सकते हैं, टाइमटेबल बना सकते हैं और अंग्रेज़ी बोलना सीख सकते हैं।",
+    en: "AI study help, quizzes, planner and English practice.",
+  },
   {
     target: "updates",
     title: "नोटिस, रिज़ल्ट, डाउनलोड",
     text: "यहाँ से स्कूल की सूचनाएँ, रिज़ल्ट, फ़ॉर्म और फ़ोटो देखें, डाउनलोड करें या नए अपलोड करें।",
     en: "See, download and upload notices, results, forms and photos.",
   },
-  { target: "action-bar", title: "नीचे के बटन", text: "फ़ोन, मैप, प्रधानाध्यापक और होम: ये बटन हर पेज पर नीचे रहते हैं।", en: "Quick buttons on every page." },
+  { target: "action-bar", title: "नीचे के बटन", text: "फ़ोन, नक्शा, AI मदद और होम: ये बटन हर पेज पर नीचे रहते हैं।", en: "Quick buttons on every page." },
   { target: "help", title: "दोबारा देखें", text: "यह गाइड फिर से देखने के लिए कभी भी इस बटन पर क्लिक करें।", en: "Tap here to see this guide again." },
 ];
 

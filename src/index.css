@@ -40,6 +40,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-ticker { animation: none; }
+  .ticker-wrap { overflow-x: auto; }
 }
 
 @keyframes fade-up {

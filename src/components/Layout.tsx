@@ -1,8 +1,10 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { AFFILIATION, DEPARTMENT, govLinks } from "../data/common";
-import { displayPhone, getSchool, imageUrl, mapLink, schoolAddress } from "../data/schools";
+import { displayPhone, getSchool, imageUrl, mapLink, schoolAddress, schoolAddressHi } from "../data/schools";
+import { useLang } from "../i18n";
 import { navItems } from "../navigation";
+import { LangToggle } from "./LangToggle";
 import { SchoolContext, useSchool, useSchoolPath } from "../schoolContext";
 import { GuidedTour } from "./GuidedTour";
 import { Logo } from "./Logo";
@@ -24,13 +26,17 @@ function ScrollManager() {
 }
 
 export function TopStrip({ right }: { right?: ReactNode }) {
+  const { t } = useLang();
   return (
     <div className="bg-brand-900 text-xs text-brand-100">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-1.5">
-        <span>
-          {AFFILIATION} · {DEPARTMENT}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-1.5">
+        <span className="min-w-0 truncate">
+          {t(AFFILIATION, "झारखंड सरकार")} · {t(DEPARTMENT, "स्कूली शिक्षा एवं साक्षरता विभाग")}
         </span>
-        {right && <span className="hidden sm:inline">{right}</span>}
+        <span className="flex shrink-0 items-center gap-4">
+          {right && <span className="hidden sm:inline">{right}</span>}
+          <LangToggle className="rounded-full bg-white/10 px-2.5 py-1 text-white" />
+        </span>
       </div>
     </div>
   );
@@ -39,6 +45,7 @@ export function TopStrip({ right }: { right?: ReactNode }) {
 function Header() {
   const school = useSchool();
   const to = useSchoolPath();
+  const { t } = useLang();
   return (
     <header className="bg-white">
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4">
@@ -47,20 +54,20 @@ function Header() {
         </Link>
         <div className="min-w-0" data-tour="school-name">
           <p className="text-xs font-semibold tracking-wide text-accent-600 uppercase md:text-sm">
-            CM School of Excellence · {AFFILIATION}
+            {t(`CM School of Excellence · ${AFFILIATION}`, "मुख्यमंत्री उत्कृष्ट विद्यालय · झारखंड सरकार")}
           </p>
           <Link to={to()} className="block text-lg leading-tight font-bold text-brand-800 md:text-3xl">
             {school.name}
           </Link>
           <p className="text-xs text-slate-600 md:text-sm">
-            {schoolAddress(school)} · U-DISE: {school.udise}
+            {t(schoolAddress(school), schoolAddressHi(school))} · U-DISE: {school.udise}
           </p>
         </div>
         <div className="ml-auto flex shrink-0 items-center gap-3">
           <div className="hidden text-right md:block">
             <p className="text-2xl font-bold text-ochre-700">जोहार झारखंड</p>
             <p className="text-xs text-slate-500">
-              {school.district}, Jharkhand
+              {school.district}, {t("Jharkhand", "झारखंड")}
             </p>
           </div>
           <figure className="flex flex-col items-center">
@@ -73,7 +80,7 @@ function Header() {
               className="h-12 w-12 rounded-full object-cover ring-2 ring-accent-500 md:h-[72px] md:w-[72px]"
             />
             <figcaption className="mt-1 hidden text-center text-[10px] leading-tight text-slate-500 md:block">
-              Hon'ble CM
+              {t("Hon'ble CM", "माननीय मुख्यमंत्री")}
             </figcaption>
           </figure>
         </div>
@@ -86,6 +93,7 @@ function Header() {
 function NavBar() {
   const [open, setOpen] = useState(false);
   const to = useSchoolPath();
+  const { t } = useLang();
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `block px-3 py-2.5 text-sm font-medium transition-colors ${
@@ -96,7 +104,7 @@ function NavBar() {
     <nav className="sticky top-0 z-30 bg-brand-700 shadow" aria-label="Main" data-tour="menu">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between lg:hidden">
-          <span className="py-3 text-sm font-semibold text-white">Menu</span>
+          <span className="py-3 text-sm font-semibold text-white">{t("Menu", "मेनू")}</span>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
@@ -111,7 +119,8 @@ function NavBar() {
           {navItems.map((item) => (
             <li key={item.path}>
               <NavLink to={to(item.path)} end={item.path === ""} className={linkClass} onClick={() => setOpen(false)} data-hint={item.hint}>
-                {item.label}
+                {item.path === "ai" && <span aria-hidden>✨ </span>}
+                {t(item.label, item.hi)}
               </NavLink>
             </li>
           ))}
@@ -122,13 +131,14 @@ function NavBar() {
 }
 
 export function Footer({ children }: { children?: ReactNode }) {
+  const { t } = useLang();
   return (
     <footer className="mt-12 bg-brand-900 text-brand-100">
       <SohraiBorder />
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-3">
         {children}
         <div className={children ? "" : "md:col-span-3"}>
-          <h3 className="mb-3 font-semibold text-white">Useful government links</h3>
+          <h3 className="mb-3 font-semibold text-white">{t("Useful government links", "उपयोगी सरकारी लिंक")}</h3>
           <ul className="space-y-1.5 text-sm">
             {govLinks.map((l) => (
               <li key={l.url}>
@@ -150,21 +160,22 @@ export function Footer({ children }: { children?: ReactNode }) {
 function SchoolFooter() {
   const school = useSchool();
   const to = useSchoolPath();
+  const { t } = useLang();
   return (
     <Footer>
       <div>
         <h3 className="mb-3 font-semibold text-white">{school.name}</h3>
-        <p className="text-sm leading-relaxed">{schoolAddress(school)}</p>
-        <p className="mt-2 text-sm">Phone: {displayPhone(school.hmPhone)}</p>
+        <p className="text-sm leading-relaxed">{t(schoolAddress(school), schoolAddressHi(school))}</p>
+        <p className="mt-2 text-sm">{t("Phone", "फ़ोन")}: {displayPhone(school.hmPhone)}</p>
         <p className="text-sm">U-DISE: {school.udise}</p>
       </div>
       <div>
-        <h3 className="mb-3 font-semibold text-white">Quick links</h3>
+        <h3 className="mb-3 font-semibold text-white">{t("Quick links", "मुख्य लिंक")}</h3>
         <ul className="grid grid-cols-2 gap-1.5 text-sm">
           {navItems.slice(1).map((item) => (
             <li key={item.path}>
               <Link to={to(item.path)} className="hover:text-white hover:underline">
-                {item.label}
+                {t(item.label, item.hi)}
               </Link>
             </li>
           ))}
@@ -178,6 +189,7 @@ function SchoolFooter() {
 function MobileActionBar() {
   const school = useSchool();
   const to = useSchoolPath();
+  const { t } = useLang();
   const item = "flex flex-1 flex-col items-center gap-0.5 py-2 text-xs font-medium";
   return (
     <nav
@@ -188,19 +200,19 @@ function MobileActionBar() {
     >
       <a href={`tel:+91${school.hmPhone}`} className={`${item} bg-accent-500 text-brand-900`}>
         <span className="text-lg" aria-hidden>☎</span>
-        Call
+        {t("Call", "फ़ोन")}
       </a>
       <a href={mapLink(school)} target="_blank" rel="noreferrer" className={item}>
         <span className="text-lg" aria-hidden>📍</span>
-        Map
+        {t("Map", "नक्शा")}
       </a>
-      <Link to={to("principal")} className={item}>
-        <span className="text-lg" aria-hidden>👤</span>
-        Principal
+      <Link to={to("ai")} className={item}>
+        <span className="text-lg" aria-hidden>✨</span>
+        {t("AI Help", "AI मदद")}
       </Link>
       <Link to={to()} className={item}>
         <span className="text-lg" aria-hidden>🏠</span>
-        Home
+        {t("Home", "होम")}
       </Link>
     </nav>
   );

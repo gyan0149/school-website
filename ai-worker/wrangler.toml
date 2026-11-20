@@ -1,0 +1,18 @@
+name = "school-ai"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Websites allowed to call this Worker (comma-separated, no trailing slash).
+ALLOWED_ORIGINS = "https://gyan0149.github.io,https://cmsoeastkosi.in,https://www.cmsoeastkosi.in,http://localhost:5173"
+# Claude model used for answers.
+MODEL = "claude-opus-5-5"
+# Questions one visitor can ask per day (needs the RATE KV namespace below).
+DAILY_LIMIT_PER_IP = "40"
+
+# Per-visitor daily limit. Create it with `npx wrangler kv namespace create RATE`
+# and paste the id it prints here, then uncomment:
+# [[kv_namespaces]]
+# binding = "RATE"
+# id = "<paste id here>"

@@ -27,6 +27,8 @@ jobs:
       - run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
+          # Worker URL for live AI answers; without it the AI pages run in demo mode.
+          VITE_AI_URL: ${{ vars.VITE_AI_URL }}
       # Serve index.html for unknown paths so deep links like /notices work.
       - run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3

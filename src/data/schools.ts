@@ -178,6 +178,11 @@ export function schoolAddress(s: School): string {
   return parts.join(", ") + (s.pinCode ? ` – ${s.pinCode}` : "");
 }
 
+export function schoolAddressHi(s: School): string {
+  const parts = [s.village, `प्रखंड ${s.block}`, `ज़िला ${s.district}`, "झारखंड"].filter(Boolean);
+  return parts.join(", ") + (s.pinCode ? ` – ${s.pinCode}` : "");
+}
+
 export function principalLabel(s: School): string {
   return s.hmName ?? "Headmaster";
 }

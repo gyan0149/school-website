@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { useLang } from "../i18n";
 
 export function PageHeader({
   title,
@@ -12,6 +13,7 @@ export function PageHeader({
   homeTo?: string;
   image?: { src: string; alt: string };
 }) {
+  const { t } = useLang();
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-brand-800 to-brand-600 text-white">
       {image ? (
@@ -25,7 +27,7 @@ export function PageHeader({
       <div className={`relative mx-auto max-w-7xl px-4 ${image ? "py-12 md:py-20" : "py-8"}`}>
         <nav aria-label="Breadcrumb" className="mb-2 text-sm text-brand-100">
           <Link to={homeTo} className="hover:underline">
-            Home
+            {t("Home", "होम")}
           </Link>
           <span className="mx-2">›</span>
           <span>{title}</span>
@@ -201,9 +203,10 @@ export function PhotoPlaceholder({
 }
 
 export function ComingSoonNote({ text }: { text: string }) {
+  const { t } = useLang();
   return (
     <div className="flex items-start gap-3 rounded-md border border-dashed border-accent-500 bg-amber-50/60 p-4">
-      <span className="rounded-full bg-accent-500 px-2 py-0.5 text-xs font-bold whitespace-nowrap text-brand-900 uppercase">Coming soon</span>
+      <span className="rounded-full bg-accent-500 px-2 py-0.5 text-xs font-bold whitespace-nowrap text-brand-900 uppercase">{t("Coming soon", "जल्द")}</span>
       <p className="text-sm text-slate-700">{text}</p>
     </div>
   );

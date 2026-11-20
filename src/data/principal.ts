@@ -1,7 +1,15 @@
 // Sample "Principal's Desk" content, shown until each principal sends their own message.
 import type { School } from "../types/school";
 
-export function samplePrincipalMessage(s: School): string[] {
+export function samplePrincipalMessage(s: School, lang: "en" | "hi" = "en"): string[] {
+  if (lang === "hi" && !s.story) {
+    return [
+      `जोहार! ${s.name} में आपका हार्दिक स्वागत है।`,
+      `मुख्यमंत्री उत्कृष्ट विद्यालय के रूप में हमारा लक्ष्य ${s.block} और आसपास के गाँवों के हर बच्चे को अच्छी कक्षाओं, लैब, पुस्तकालय और समर्पित शिक्षकों के साथ मुफ़्त गुणवत्तापूर्ण शिक्षा देना है।`,
+      "हम चाहते हैं कि हमारे छात्र पढ़ाई में अच्छा करें और खेल, संस्कृति, अनुशासन और अच्छे संस्कारों में भी आगे बढ़ें। हर बच्चा हमारे लिए महत्वपूर्ण है, और हम कोशिश करते हैं कि कोई भी बच्चा पीछे न छूटे।",
+      "अभिभावकों से अनुरोध है कि कक्षा शिक्षकों से संपर्क में रहें, अभिभावक-शिक्षक बैठकों में आएँ और ज़रूरत हो तो कभी भी स्कूल आएँ। साथ मिलकर हम बच्चों का उज्ज्वल भविष्य बना सकते हैं।",
+    ];
+  }
   if (s.story) {
     return [
       `Johar! A warm welcome to ${s.name}.`,

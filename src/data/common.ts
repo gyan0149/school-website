@@ -4,6 +4,9 @@ import type { GovLink, Scheme, SubjectGroup } from "../types/school";
 export const AFFILIATION = "Government of Jharkhand";
 export const DEPARTMENT = "School Education & Literacy Department";
 
+export const ABOUT_CM_SOE_HI =
+  "मुख्यमंत्री उत्कृष्ट विद्यालय (CM SoE) झारखंड सरकार द्वारा चुने गए सरकारी स्कूल हैं, जहाँ बच्चों को बेहतर कक्षाओं, लैब, पुस्तकालय और प्रशिक्षित शिक्षकों के साथ मुफ़्त गुणवत्तापूर्ण शिक्षा दी जाती है।";
+
 export const ABOUT_CM_SOE =
   "CM Schools of Excellence (CM SoE) are government schools selected by the Government of Jharkhand to give children quality education with better classrooms, labs, libraries and trained teachers, free of cost.";
 
@@ -51,4 +54,22 @@ export const requiredDocuments: string[] = [
   "Caste and income certificate (for scholarships, if applicable)",
   "Bank passbook of the child (for DBT schemes)",
   "Passport-size photographs",
+];
+
+export const admissionGuidelinesHi: string[] = [
+  "एडमिशन स्कूली शिक्षा एवं साक्षरता विभाग, झारखंड सरकार के दिशानिर्देशों के अनुसार होते हैं।",
+  "RTE कानून के तहत कक्षा 1 से 8 तक पढ़ाई मुफ़्त है। कोई डोनेशन या कैपिटेशन फ़ीस नहीं ली जाती।",
+  "कक्षा 11 में एडमिशन (जहाँ उपलब्ध हो) 10वीं बोर्ड के अंकों और हर स्ट्रीम में सीटों के आधार पर होता है।",
+  "विशेष आवश्यकता वाले बच्चों (CWSN) को ज़रूरी सहायता के साथ एडमिशन दिया जाता है।",
+  "सही तारीख और सीटों के लिए स्कूल कार्यालय से संपर्क करें।",
+];
+
+export const requiredDocumentsHi: string[] = [
+  "जन्म प्रमाण पत्र (प्रवेश कक्षा के लिए)",
+  "बच्चे का आधार कार्ड",
+  "पिछले स्कूल का स्थानांतरण प्रमाण पत्र (TC)",
+  "पिछली कक्षा की मार्कशीट",
+  "जाति और आय प्रमाण पत्र (छात्रवृत्ति के लिए, यदि लागू हो)",
+  "बच्चे का बैंक पासबुक (DBT योजनाओं के लिए)",
+  "पासपोर्ट साइज़ फ़ोटो",
 ];
